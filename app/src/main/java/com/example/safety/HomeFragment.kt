@@ -53,6 +53,11 @@ class HomeFragment : Fragment() {
                 "10th building, 3rd floor, Shibuya Street, Dublin",
                 "70%",
                 "240"
+            ), MemberModel(
+                "Harry",
+                "10th building, 3rd floor, Shibuya Street, Dublin",
+                "70%",
+                "240"
             ),
 
 
