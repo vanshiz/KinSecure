@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/graybg">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/graybg">
+
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+            android:text="@string/app_name"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/gCard"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="14dp"
+            app:cardBackgroundColor="@color/pastel_green"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:cardElevation="8dp"/>
+
+        <TextView
+            android:id="@+id/text_sos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="8dp"
+            android:text="SOS"
+            android:textColor="@color/whites"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/gCard"
+            app:layout_constraintTop_toTopOf="@id/gCard" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="16dp"
+            android:text="Instantly alert emergency services and family members with a single tap. Ensure help is on the way in critical situations."
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@id/image_sos"
+            app:layout_constraintStart_toStartOf="@id/gCard"
+            app:layout_constraintTop_toBottomOf="@id/text_sos" />
+
+        <ImageView
+            android:id="@+id/image_sos"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_margin="16dp"
+            android:elevation="16dp"
+            android:src="@drawable/ic_sos"
+            app:layout_constraintBottom_toBottomOf="@id/gCard"
+            app:layout_constraintEnd_toEndOf="@id/gCard"
+            app:layout_constraintTop_toTopOf="@id/gCard" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pCard"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="14dp"
+            app:cardBackgroundColor="@color/pastel_pink"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintTop_toBottomOf="@id/gCard"
+            app:cardElevation="8dp"/>
+
+        <TextView
+            android:id="@+id/text_guard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="16dp"
+            android:text="GUARD"
+            android:textColor="#fff"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/pCard"
+            app:layout_constraintTop_toTopOf="@id/pCard" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="8dp"
+            android:text="Monitor your journey in real-time and notify selected contacts of your route and ETA"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@id/img_guard"
+            app:layout_constraintStart_toStartOf="@id/pCard"
+            app:layout_constraintTop_toBottomOf="@id/text_guard" />
+
+        <ImageView
+            android:id="@+id/img_guard"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_margin="16dp"
+            android:elevation="16dp"
+            android:src="@drawable/ic_shield"
+            app:layout_constraintBottom_toBottomOf="@id/pCard"
+            app:layout_constraintEnd_toEndOf="@id/pCard"
+            app:layout_constraintTop_toTopOf="@id/pCard" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/oCard"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="14dp"
+            app:cardBackgroundColor="@color/lavander"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintTop_toBottomOf="@id/pCard"
+            app:cardElevation="16dp"/>
+
+        <TextView
+            android:id="@+id/text_safe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="16dp"
+            android:text="SAFE ZONE"
+            android:textColor="#fff"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/oCard"
+            app:layout_constraintTop_toTopOf="@id/oCard" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="16dp"
+            android:text="Set up safe zones and receive alerts when loved ones enter or leave designated areas."
+            android:textColor="#fff"
+            app:layout_constraintEnd_toStartOf="@id/img_safe"
+            app:layout_constraintStart_toStartOf="@id/oCard"
+            app:layout_constraintTop_toBottomOf="@id/text_safe" />
+
+        <ImageView
+            android:id="@+id/img_safe"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_margin="16dp"
+            android:elevation="16dp"
+            android:src="@drawable/ic_family"
+            app:layout_constraintBottom_toBottomOf="@id/oCard"
+            app:layout_constraintEnd_toEndOf="@id/oCard"
+            app:layout_constraintTop_toTopOf="@id/oCard" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:itemIconTint="@drawable/nav_items_colors"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/oCard"
+            app:itemTextColor="@color/pastel_green"
+            app:menu="@menu/bottom_bar_items" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

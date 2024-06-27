@@ -1,4 +1,4 @@
-package com.example.kinsecure
+package com.example.safety
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.kinsecure", appContext.packageName)
+        assertEquals("com.example.safety", appContext.packageName)
     }
 }

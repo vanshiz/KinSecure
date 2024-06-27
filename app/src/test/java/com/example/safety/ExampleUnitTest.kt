@@ -1,4 +1,4 @@
-package com.example.kinsecure
+package com.example.safety
 
 import org.junit.Test
 

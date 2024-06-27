@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "KinSecure"
+rootProject.name = "safety"
 include(":app")
  
