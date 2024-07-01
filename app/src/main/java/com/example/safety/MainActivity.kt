@@ -1,10 +1,14 @@
 package com.example.safety
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.safety.AddContactFragment.Companion.TAG
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +38,11 @@ class MainActivity : AppCompatActivity() {
             true
         }
         bottomBar.selectedItemId=R.id.nav_home
+
+
+
+
+
 
 
     }
