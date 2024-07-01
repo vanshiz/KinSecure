@@ -1,4 +1,4 @@
-package com.example.safety.Fragments
+package com.example.safety
 
 import android.os.Bundle
 import android.util.Log
@@ -7,40 +7,52 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import android.widget.TextView
-import com.example.safety.utils.Models.ContactModel
-import com.example.safety.utils.Adapters.InviteAdapter
-import com.example.safety.R
+import com.example.safety.databinding.FragmentProfileBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var db: FirebaseFirestore
-    private val TAG = "ProfileFragment"
+    private lateinit var binding: FragmentProfileBinding
+    private val firestore: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Initialize Firestore
-        db = Firebase.firestore
-
-        // Enable Firestore offline data persistence
-        val settings = FirebaseFirestoreSettings.Builder()
-            .setPersistenceEnabled(true)
-            .build()
-        db.firestoreSettings = settings
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+
+        binding.sendInvite.setOnClickListener {
+            sendInvite()
+        }
+        return binding.root
+    }
+
+    private fun sendInvite() {
+        val mail = binding.inviteMail.text.toString()
+        Log.d("Mail89", "sendInvite: $mail")
+
+        val data = hashMapOf(
+            "invite_status" to 0,
+            "email" to mail
+        )
+
+        val senderMail = "bhargava.vanshika29@gmail.com"
+
+        firestore.collection("users")
+            .document(senderMail)
+            .collection("invites")
+            .document(mail).set(data)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Invite successfully sent")
+                binding.inviteMail.text.clear()  // Clear the input field
+                getInvites() // Refresh invites list
+            }.addOnFailureListener {
+                Log.e("Firestore", "Error sending invite", it)
+            }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,45 +69,64 @@ class ProfileFragment : Fragment() {
 
         val inviteAdapter = InviteAdapter(listContacts)
 
-        val inviteRecycler = requireView().findViewById<RecyclerView>(R.id.recycler_invite)
+        val inviteRecycler = binding.recyclerInvite
         inviteRecycler.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         inviteRecycler.adapter = inviteAdapter
 
-        // Retrieve user profile from Firestore
-        getUserProfile(view)
+        getInvites()
     }
 
-    private fun getUserProfile(view: View) {
-        db.collection("users").document("userProfile")
-            .get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    val name = document.getString("name")
-                    val address = document.getString("address")
-                    val time = document.getString("time")
-                    val battery = document.getString("battery")
-                    val distance = document.getString("distance")
-                    val wifi = document.getString("wifi")
+    private fun getInvites() {
+        val senderMail = "bhargava.vanshika29@gmail.com" // Change this to the actual sender email or user ID
 
-                    // Update UI with retrieved data
-                    view.findViewById<TextView>(R.id.name)?.text = name
-                    view.findViewById<TextView>(R.id.address)?.text = address
-                    view.findViewById<TextView>(R.id.time)?.text = time
-                    view.findViewById<TextView>(R.id.battery_percent)?.text = battery
-                    view.findViewById<TextView>(R.id.distance_value)?.text = distance
-                    view.findViewById<TextView>(R.id.wifi_value)?.text = wifi
-                } else {
-                    Log.d(TAG, "No such document")
+        firestore.collection("users")
+            .document(senderMail)
+            .collection("invites").get()
+            .addOnSuccessListener { querySnapshot ->
+                val list: ArrayList<String> = ArrayList()
+                for (document in querySnapshot.documents) {
+                    if (document.getLong("invite_status") == 0L) {
+                        val email = document.getString("email") ?: ""
+                        list.add(email)
+                    }
                 }
+
+                Log.d("invite89", "Fetched invites: $list")
+
+                val adapter = InviteMailAdapter(list, this)
+                binding.invitationRecycler.layoutManager = LinearLayoutManager(requireContext())
+                binding.invitationRecycler.adapter = adapter
             }
             .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
+                Log.e("Firestore", "Error getting invites", exception)
             }
     }
+
+
 
     companion object {
         @JvmStatic
         fun newInstance() = ProfileFragment()
+    }
+
+    fun onDenyClick(mail: String) {
+        Log.d("invite89", "onDenyClick: $mail")
+
+        val data = hashMapOf(
+            "invite_status" to -1
+        )
+
+        val senderMail = "bhargava.vanshika29@gmail.com"
+
+        firestore.collection("users")
+            .document(senderMail)
+            .collection("invites")
+            .document(mail).set(data)
+            .addOnSuccessListener {
+                getInvites() // Refresh invites list after updating the status
+            }.addOnFailureListener {
+                Log.e("Firestore", "Error updating invite", it)
+            }
     }
 }
